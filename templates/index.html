@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF to Data Exporter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 0;
+        }
+
+        .error-message {
+            color: red;
+            margin-bottom: 10px;
+        }
+
+        .success-message {
+            color: green;
+            margin-bottom: 10px;
+        }
+
+        .output-path {
+            margin-top: 10px;
+        }
+
+        .download-button {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>PDF to Data Exporter</h1>
+
+        {% if error_message %}
+        <div class="error-message">{{ error_message }}</div>
+        {% endif %}
+
+        {% if status_message %}
+        <div class="success-message">{{ status_message }}</div>
+        {% endif %}
+
+        <form action="/process" method="post" enctype="multipart/form-data">
+            <div>
+                <label for="pdf_file">PDF File:</label>
+                <input type="file" id="pdf_file" name="pdf_file" accept=".pdf" required>
+            </div>
+
+            <div>
+                <label for="output_format">Export Format:</label>
+                <select id="output_format" name="output_format">
+                    <option value="Excel">Excel</option>
+                    <option value="CSV">CSV</option>
+                    <option value="JSON">JSON</option>
+                </select>
+            </div>
+
+            <div>
+                <button type="submit">Convert</button>
+            </div>
+        </form>
+
+        {% if output_path %}
+        <div class="output-path">
+            <strong>Output Path:</strong> {{ output_path }}
+        </div>
+        {% endif %}
+
+        {% if output_path %}
+        <div class="download-button">
+            <a href="/download/{{ output_path }}" download>Download</a>
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>
